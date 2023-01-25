@@ -3,9 +3,27 @@ const express = require('express');
 const app = express();
 const PORT = 3000;
 
-app.get('/', (request, response) => response.json({
-  message: 'Olá Dev! Bem vindo ao curso!',
-}));
+app.get('/projects', (request, response) => response.json([
+  'Projeto 1',
+  'Projeto 2',
+]));
+
+app.post('/projects', (request, response) => response.json([
+  'Projeto 1',
+  'Projeto 2',
+  'Projeto 3',
+]));
+
+app.put('/projects/:id', (request, response) => response.json([
+  'Projeto 4',
+  'Projeto 2',
+  'Projeto 3',
+]));
+
+app.delete('/projects/:id', (request, response) => response.json([
+  'Projeto 2',
+  'Projeto 3',
+]));
 
 /**
  * Para que uma aplicação cliente possa acessar a aplicação que estamos criando,
