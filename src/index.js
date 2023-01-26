@@ -47,10 +47,19 @@ app.put('/projects/:id', (request, response) => {
   return response.json(projects[projectIndex]);
 });
 
-app.delete('/projects/:id', (request, response) => response.json([
-  'Projeto 2',
-  'Projeto 3',
-]));
+app.delete('/projects/:id', (request, response) => {
+  const { id } = request.params;
+
+  const projectIndex = projects.findIndex((project) => project.id === id);
+
+  if (projectIndex < 0) {
+    return response.status(404).json({ error: 'Project not found!' });
+  }
+
+  projects.splice(projectIndex, 1);
+
+  return response.sendStatus(204);
+});
 
 /**
  * Para que uma aplicação cliente possa acessar a aplicação que estamos criando,
