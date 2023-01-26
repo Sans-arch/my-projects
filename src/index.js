@@ -3,10 +3,20 @@ const express = require('express');
 const app = express();
 const PORT = 3000;
 
-app.get('/projects', (request, response) => response.json([
-  'Projeto 1',
-  'Projeto 2',
-]));
+// GET http://localhost:3000/projects?title=Node&owner=Aluizio&page=1
+// GET http://localhost:3000/projects?page=1&limit=15
+
+app.get('/projects', (request, response) => {
+  const { title, owner, page } = request.query;
+  console.log({
+    title, owner, page,
+  });
+
+  return response.json([
+    'Projeto 1',
+    'Projeto 2',
+  ]);
+});
 
 app.post('/projects', (request, response) => response.json([
   'Projeto 1',
