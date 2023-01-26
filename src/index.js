@@ -3,12 +3,11 @@ const express = require('express');
 const app = express();
 const PORT = 3000;
 
-// GET http://localhost:3000/projects?title=Node&owner=Aluizio&page=1
-// GET http://localhost:3000/projects?page=1&limit=15
+app.use(express.json());
 
 app.get('/projects', (request, response) => {
-  const { title, owner, page } = request.query;
-  console.log({ title, owner, page });
+  const { title, owner } = request.query;
+  console.log({ title, owner });
 
   return response.json([
     'Projeto 1',
@@ -16,15 +15,21 @@ app.get('/projects', (request, response) => {
   ]);
 });
 
-app.post('/projects', (request, response) => response.json([
-  'Projeto 1',
-  'Projeto 2',
-  'Projeto 3',
-]));
+app.post('/projects', (request, response) => {
+  const { name, owner } = request.body;
+  console.log({ name, owner });
 
-app.put('/projects/:id/:name', (request, response) => {
-  const { id, name } = request.params;
-  console.log(id, name);
+  return response.json([
+    'Projeto 1',
+    'Projeto 2',
+    'Projeto 3',
+  ]);
+});
+
+app.put('/projects/:id', (request, response) => {
+  const { id } = request.params;
+  const { name, owner } = request.body;
+  console.log(id, name, owner);
 
   return response.json([
     'Projeto 4',
