@@ -7,11 +7,23 @@ const PORT = 3000;
 // Mock
 const projects = [];
 
+// Criando um middleware, função que intercepta a request antes de ela entrar no handler de uma rota
+function logRoutes(request, response, next) {
+  const { method, url } = request;
+  const route = `[${method.toUpperCase()}] ${url}`;
+  console.log(route);
+  return next();
+}
+
 app.use(express.json());
+
+// Middleware - será utilizado para todas as rotas
+// app.use(logRoutes);
 
 app.get('/projects', (request, response) => response.json(projects));
 
-app.post('/projects', (request, response) => {
+// Executando um middleware `logRoutes` antes de entrar no handler da rota
+app.post('/projects', logRoutes, (request, response) => {
   const { name, owner } = request.body;
   const project = {
     id: uuidv4(),
